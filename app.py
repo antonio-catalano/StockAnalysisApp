@@ -20,8 +20,10 @@ from dateutil.parser import parse
 from scipy.stats import iqr
 from datetime import timedelta, date
 
+
+
 def set_pub():
-    rc('font', weight='bold')    
+    rc('font', weight='bold')    # bold fonts are easier to see
     rc('grid', c='0.5', ls='-', lw=0.5)
     rc('figure', figsize = (10,8))
     plt.style.use('bmh')
@@ -32,6 +34,7 @@ def loadData(ticker, start, end):
      df_stockdata = pdr.get_data_yahoo(ticker, start= str(start), end = str(end) )['Adj Close']   
      df_stockdata.index = pd.to_datetime(df_stockdata.index)
      return df_stockdata
+
 
 @st.cache(suppress_st_warning=True)
 def summary_stats(ticker):
@@ -44,11 +47,9 @@ def ratio_indicators(ticker):
     return df_ratios
 
 def get_data_yahoo(ticker, start, end):
-    try:
-        data = pdr.get_data_yahoo(ticker, start= str(start), end = str(end) )
-        return st.dataframe(data)
-    except OverflowError:
-        st.error('Date out of range!')
+    data = pdr.get_data_yahoo(ticker, start= str(start), end = str(end) )
+    return st.dataframe(data)
+
         
 
 def plotData(ticker, start, end):
@@ -199,7 +200,8 @@ def plot_trailing(ticker, start, end):
     
 def rolling_sharpe_plot(ticker, start, end):
     ret = loadData(ticker, start, end).pct_change()[1:]
-    sp500 = pdr.get_data_yahoo('^SP500TR', start= str(start), end = str(end) )
+    start_sp = ret.index[0].strftime('%Y-%m-%d')
+    sp500 = pdr.get_data_yahoo('^SP500TR', start= start_sp, end = str(end) )
     sp500_ret = (sp500['Close'] - sp500['Close'].shift(1)) / sp500['Close'].shift(1)
         
     days2 = st.slider('Business Days to roll', 5, 120, 30)
@@ -213,7 +215,7 @@ def rolling_sharpe_plot(ticker, start, end):
     ax.legend(loc = 'best')
     plt.grid(True)
     st.pyplot()
-
+    
 
 ''' # Adjusted close prices and total returns
    ### (stock prices from *yahoo finance*) '''
