@@ -8,6 +8,6 @@ outlier analysis.
 
  
 
-\# Requirements
+**Requirements**
 
 Python 3.6 version or superior
