@@ -19,15 +19,9 @@ yf.pdr_override() # <== that's all it takes :-)
 from dateutil.parser import parse
 from scipy.stats import iqr
 from datetime import timedelta, date
-#import cufflinks as cf
-#import plotly.plotly as py
-#import plotly
-#plotly.tools.set_credentials_file(username='antonio-catalano', api_key='gUmtJRdRNBNKZNAvH0eY')
-#from bokeh.plotting import figure
-
 
 def set_pub():
-    rc('font', weight='bold')    # bold fonts are easier to see
+    rc('font', weight='bold')    
     rc('grid', c='0.5', ls='-', lw=0.5)
     rc('figure', figsize = (10,8))
     plt.style.use('bmh')
@@ -35,13 +29,9 @@ def set_pub():
 
 @st.cache(suppress_st_warning=True)
 def loadData(ticker, start, end): 
-    try:
-        df_stockdata = pdr.get_data_yahoo(ticker, start= str(start), end = str(end) )['Adj Close']   
-        df_stockdata.index = pd.to_datetime(df_stockdata.index)
-        return df_stockdata
-    except OverflowError:
-        st.error('Date out of range!')
-        #return None
+     df_stockdata = pdr.get_data_yahoo(ticker, start= str(start), end = str(end) )['Adj Close']   
+     df_stockdata.index = pd.to_datetime(df_stockdata.index)
+     return df_stockdata
 
 @st.cache(suppress_st_warning=True)
 def summary_stats(ticker):
@@ -59,7 +49,7 @@ def get_data_yahoo(ticker, start, end):
         return st.dataframe(data)
     except OverflowError:
         st.error('Date out of range!')
-        #return None
+        
 
 def plotData(ticker, start, end):
     
@@ -154,10 +144,7 @@ def plot_trailing(ticker, start, end):
                      parse(str(trailing_all.dropna().index[-1])).date()))
     st.line_chart(ii, width=800, height=120)
     
-    #print(st.dataframe(trailing_all.dropna().head(10)))
-    #print()
     ret = loadData(ticker, start, end).pct_change()[1:]
-    #print(st.dataframe(ret.head(10)))
     trail_aim = trailing_all[['Q3 + 1.5IQR', 'Q1 - 1.5IQR']]
     
     def daterange(start_date, end_date):
@@ -168,7 +155,7 @@ def plot_trailing(ticker, start, end):
     def outliers():
         lista = []
         thresholds = []
-        #delta = start + days
+        
         for i in range(len(ret)-days):
             ret_ = ret.iloc[i:days+i]
             trail_ = trail_aim.iloc[days+i]
@@ -185,27 +172,18 @@ def plot_trailing(ticker, start, end):
         df['Right tail'] = [elem[0] for elem in lista]
         df['Left tail'] = [elem[1] for elem in lista]
         df['Thresholds'] = [t for t in thresholds]
-        #df['threshold'] = df['threshold'].map(lambda x: round(x[0],2), round(x[1],2))
-        #df['four'] = ['ok' for elem in lista]
-        #df['five'] = ['ok' for elem in lista]
-#        start_ = start
-#        index_date = []
-#        for single_date in daterange(start_ , end - timedelta(days)):
-#            index_date.append(single_date.strftime("%Y-%m-%d"))
-            
-        #df.values = [elem[0], elem[1] for elem in lista]
-        #df.index = index_date
+        
         df2 = pd.DataFrame()
         df2['uno'] = [i[0] for i in df.index]
         df2['due'] = [i[1] for i in df.index]
         
-        #st.dataframe(df2)
+      
         new = pd.DataFrame()
         new['A'] = [(str(ret.index[i].date()), str(ret.index[i+days].date())) for i in range(len(ret)-days)]
         new.index = new['A']
         
         df.index = new.index
-        #st.dataframe(df)
+        
        
         return df
     
@@ -217,10 +195,7 @@ def plot_trailing(ticker, start, end):
     st.subheader('Ordered by number of negative outliers (decreasing order)')
     st.dataframe(df_outliers.sort_values(by = 'Left tail',ascending = False))
    
-    
-    #st.dataframe(ret.index)
-    
-    
+   
     
 def rolling_sharpe_plot(ticker, start, end):
     ret = loadData(ticker, start, end).pct_change()[1:]
@@ -239,11 +214,6 @@ def rolling_sharpe_plot(ticker, start, end):
     plt.grid(True)
     st.pyplot()
 
-#@st.cache
-#def select_ticker():
-#    ticker = st.selectbox('Select the ticker if present in the S&P 500 index', sp500_list['Symbol']).upper()
-#    ticker = st.text_input('Write the ticker if not present in the S&P 500 index', 'MN.MI').upper()
-#    return ticker
 
 ''' # Adjusted close prices and total returns
    ### (stock prices from *yahoo finance*) '''
@@ -258,7 +228,7 @@ if checkbox_noSP:
     ticker = st.text_input('Write the ticker (check it in yahoo finance)', 'MN.MI').upper()
     pivot_sector = False
 
-#ticker_noSP = st.text_input('Write the ticker if not present in the S&P 500 index', '').upper()
+
 start = st.text_input('Enter the start date in yyyy-mm-dd format:', '2018-01-01')
 end = st.text_input('Enter the end date in yyyy-mm-dd format:', '2019-01-01')
 
@@ -318,7 +288,7 @@ if check_dates() and pivot_date == True:
             sector = sector.values[0]
             series_info['sector'] = sector
         
-        #df_info = df_info.loc[['symbol', 'exchange','longName']]    
+           
         series_info.name = 'Stock'            
         st.dataframe(series_info)
         
@@ -347,8 +317,8 @@ if check_dates() and pivot_date == True:
             an outlier in the left tail of the distribution.''')
             
             st.subheader('Interquartile range : Q3 - Q1')
-            st.subheader('Upper threshold : Q3 + 1.5IQR')#, st.markdown('*Q3 + 1.5IQR*'))
-            st.subheader('Lower threshold : Q1 - 1.5IQR')#, st.markdown('*Q1 - 1.5IQR*'))
+            st.subheader('Upper threshold : Q3 + 1.5IQR')
+            st.subheader('Lower threshold : Q1 - 1.5IQR')
             st.write('')
             plot_trailing(ticker, start, end)
                      
@@ -367,7 +337,7 @@ if check_dates() and pivot_date == True:
             ''' We compare the rolling sharpe ratio (RSR) of the stock with the rolling sharpe ratio of S&P500 (TR).
             We calculate the RSR by fixing the risk free rate equal to 0.
             Hence *RSR = rolling_returns_mean / rolling_returns_std*.
-            ''' ## Rolling sharpe ratio '''
+            ''' 
             rolling_sharpe_plot(ticker, start, end)
     
         historical_prices_checkbox = st.sidebar.checkbox('Historical prices and volumes')
