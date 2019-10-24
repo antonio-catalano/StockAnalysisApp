@@ -1,2 +1,13 @@
-# StockAnalysisApp
-A stock analysis app with streamlit
+StockAnalysisApp
+================
+
+A stock analysis app with streamlit.  
+You select the ticker of the stock and make a series of analysis by using the
+price chart, returns, ratios, fundamental metrics, quantitative metrics and
+outlier analysis.
+
+ 
+
+\# Requirements
+
+Python 3.6 version or superior
