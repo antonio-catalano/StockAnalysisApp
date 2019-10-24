@@ -20,3 +20,20 @@ Demo
 **Requirements**
 
 Python 3.6 version or superior
+
+ 
+
+**How to run this demo**
+
+ 
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+pip install --upgrade streamlit
+streamlit run https://raw.githubusercontent.com/streamlit/StockAnalysisApp/master/app.py
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ 
+
+**Run online**
+
+Soon available
