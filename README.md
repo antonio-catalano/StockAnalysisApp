@@ -8,6 +8,15 @@ metrics and outlier analysis.
 
  
 
+Demo
+----
+
+ 
+
+![StockAnalysisApp Demo](demo/sample.gif)
+
+ 
+
 **Requirements**
 
 Python 3.6 version or superior

@@ -191,9 +191,9 @@ def plot_trailing(ticker, start, end):
     st.subheader('Number outliers for each datarange (%s business days)'%days)
     df_outliers = outliers()
     st.dataframe(df_outliers)
-    st.subheader('Ordered by number of positive outliers (decreasing order)')
+    st.subheader('Sorted by number of positive outliers (decreasing order)')
     st.dataframe(df_outliers.sort_values(by = 'Right tail', ascending = False))
-    st.subheader('Ordered by number of negative outliers (decreasing order)')
+    st.subheader('Sorted by number of negative outliers (decreasing order)')
     st.dataframe(df_outliers.sort_values(by = 'Left tail',ascending = False))
    
    
@@ -239,7 +239,7 @@ end = st.text_input('Enter the end date in yyyy-mm-dd format:', '2019-01-01')
 
 try:
     start = parse(start).date()
-    print('The start date is valid')
+    #print('The start date is valid')
     control_date1 = True
 except ValueError:
     st.error('Invalid Start date')
@@ -248,7 +248,7 @@ except ValueError:
     
 try:
     end = parse(end).date()
-    print('The end date is valid')
+    #print('The end date is valid')
     control_date2 = True
 except ValueError:
     st.error('Invalid End date')
