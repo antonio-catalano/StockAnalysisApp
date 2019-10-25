@@ -5,4 +5,5 @@ pandas
 FundamentalAnalysis
 yfinance
 scipy
+pandas-datareader
 pillow
