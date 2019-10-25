@@ -28,8 +28,16 @@ Python 3.6 version or superior
  
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-pip install --upgrade streamlit
-streamlit run https://raw.githubusercontent.com/streamlit/StockAnalysisApp/master/app.py
+pip install streamlit 
+pip install numpy pandas matplotlib scipy # if you don't use Anaconda
+pip install FundamentalAnalysis
+pip install yfinance
+pip install Pillow # the successor of PIL, it's backwards compatible with PIL
+
+git clone https://github.com/antonio-catalano/StockAnalysisApp.git
+# cd into the project root folder
+cd StockAnalysisApp
+streamlit run app.py
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
  

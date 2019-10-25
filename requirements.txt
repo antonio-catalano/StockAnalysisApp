@@ -4,4 +4,5 @@ numpy
 pandas
 FundamentalAnalysis
 yfinance
-scipy.stats
+scipy
+pillow
