@@ -199,13 +199,14 @@ def plot_trailing(ticker, start, end):
    
     
 def rolling_sharpe_plot(ticker, start, end):
-    ret = loadData(ticker, start, end).pct_change()[1:]
-    start_sp = ret.index[0].strftime('%Y-%m-%d')
+    data_ = loadData(ticker, start, end)
+    ret = data_.pct_change()[1:]
+    start_sp = data_.index[0].strftime('%Y-%m-%d')
     sp500 = pdr.get_data_yahoo('^SP500TR', start= start_sp, end = str(end) )
-    sp500_ret = (sp500['Close'] - sp500['Close'].shift(1)) / sp500['Close'].shift(1)
+    sp500_ret = sp500['Close'].pct_change()[1:]
         
-    days2 = st.slider('Business Days to roll', 5, 120, 30)
-    rs_sp500 = sp500_ret[1:].rolling(days2).apply(rolling_sharpe)
+    days2 = st.slider('Business Days to roll', 5, 130, 20)
+    rs_sp500 = sp500_ret.rolling(days2).apply(rolling_sharpe)
     rs = ret.rolling(days2).apply(rolling_sharpe)
     fig, ax = plt.subplots(figsize=(10,4))
     ax.plot(rs.index, rs.values, 'b-', label = 'Rolling Sharpe %s'%ticker)
