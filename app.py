@@ -205,7 +205,7 @@ def rolling_sharpe_plot(ticker, start, end):
     sp500 = pdr.get_data_yahoo('^SP500TR', start= start_sp, end = str(end) )
     sp500_ret = sp500['Close'].pct_change()[1:]
         
-    days2 = st.slider('Business Days to roll', 5, 130, 20)
+    days2 = st.slider('Business Days to roll', 5, 130, 50)
     rs_sp500 = sp500_ret.rolling(days2).apply(rolling_sharpe)
     rs = ret.rolling(days2).apply(rolling_sharpe)
     fig, ax = plt.subplots(figsize=(10,4))
