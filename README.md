@@ -44,4 +44,4 @@ streamlit run app.py
 
 **Run online**
 
-Soon available
+<https://essential-stock-analysis.herokuapp.com/>
