@@ -25,18 +25,15 @@ Python 3.6 version or superior
 
 **How to run this demo**
 
- 
-
+1. cd to the directory where _requirements.txt_ is located
+2. activate your virualenv
+3. run: `pip install -r requirements.txt` in your shell
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-pip install streamlit 
-pip install numpy pandas matplotlib scipy # if you don't use Anaconda
-pip install FundamentalAnalysis
-pip install yfinance
-pip install Pillow # the successor of PIL, it's backwards compatible with PIL
-
 git clone https://github.com/antonio-catalano/StockAnalysisApp.git
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # cd into the project root folder
-cd StockAnalysisApp
+'path'>cd StockAnalysisApp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 streamlit run app.py
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

@@ -90,7 +90,11 @@ def plotData(ticker, start, end):
     st.pyplot()
     
 def rolling_sharpe(y):
-    return np.sqrt(252) * (y.mean() / y.std())
+    def geom_mean(y):
+        y_1 = y + 1
+        y_1_prod = np.prod(y_1)
+        return y_1_prod**(1/(len(y))) - 1
+    return np.sqrt(252) * (geom_mean(y) / y.std())
 
 
 def plot_std_ret(ticker, start, end):
@@ -209,9 +213,9 @@ def rolling_sharpe_plot(ticker, start, end):
     rs_sp500 = sp500_ret.rolling(days2).apply(rolling_sharpe)
     rs = ret.rolling(days2).apply(rolling_sharpe)
     fig, ax = plt.subplots(figsize=(10,4))
-    ax.plot(rs.index, rs.values, 'b-', label = 'Rolling Sharpe %s'%ticker)
-    ax.plot(rs.index, rs_sp500, 'r-', label = 'Rolling Sharpe S&P500 (TR)')
-    ax.set_title('Rolling Sharpe ratio (%s days, annualized)'%days2, fontdict = {'fontsize' : 15})
+    ax.plot(rs.index, rs.values, 'b-', label = 'Geometric Rolling Sharpe %s'%ticker)
+    ax.plot(rs.index, rs_sp500, 'r-', label = 'Geometric Rolling Sharpe S&P500 (TR)')
+    ax.set_title('Geometric Rolling Sharpe ratio (%s days, annualized)'%days2, fontdict = {'fontsize' : 15})
     ax.set_xlim(ax.get_xlim()[0] - 15, ax.get_xlim()[1] + 15)
     ax.legend(loc = 'best')
     plt.grid(True)
@@ -337,7 +341,7 @@ if check_dates() and pivot_date == True:
         rs_checkbox = st.sidebar.checkbox('Rolling Sharpe ratio vs Rolling Sharpe ratio S&P500, (annualized)')
         if rs_checkbox: 
             ''' # Rolling Sharpe Ratio '''
-            ''' We compare the rolling sharpe ratio (RSR) of the stock with the rolling sharpe ratio of S&P500 (TR).
+            ''' We compare the geometric rolling sharpe ratio (RSR) of the stock with the geometric rolling sharpe ratio of S&P500 (TR).
             We calculate the RSR by fixing the risk free rate equal to 0.
             Hence *RSR = rolling_returns_mean / rolling_returns_std*.
             ''' 
